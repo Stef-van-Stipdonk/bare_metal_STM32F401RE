@@ -1,8 +1,5 @@
-# ignore all files
-*
-
-# whitelisted files
-!*.md
-!.gitignore
-!main.c
-!*.ld
+*.elf
+*.bin
+*.o
+.rgignore
+compile_commands.json
