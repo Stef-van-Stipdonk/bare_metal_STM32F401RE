@@ -1,0 +1,8 @@
+# ignore all files
+*
+
+# whitelisted files
+!*.md
+!.gitignore
+!main.c
+!*.ld
