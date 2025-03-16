@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#define BIT(x) (1UL << (x))
 #define GPIO(bank) ((struct gpio_t *) (0x40020000 + 0x400 * (bank)))
 #define PIN(bank, num) ((((bank) - 'A') << 8) | (num))
 #define PINNO(pin) (uint8_t)(pin & 255)

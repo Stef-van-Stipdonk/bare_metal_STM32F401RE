@@ -1,8 +1,12 @@
 #include "gpio.h"
-
+#include "rcc.h"
+#include <stdint.h>
 
 int main(void) {
-	gpio_set_mode(PIN('A', 5), GPIO_MODE_OUTPUT);
+	uint16_t led = PIN('A', 5);
+	RCC->AHB1ENR = BIT(PINBANK(led));
+	gpio_set_mode(led, GPIO_MODE_OUTPUT);
+	for (;;) {}
 	return 0;
 }
 
