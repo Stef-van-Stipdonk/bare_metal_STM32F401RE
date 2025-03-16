@@ -1,6 +1,9 @@
 #ifndef GPIO_H
 #define GPIO_H 1
 
+// Purpose:
+// Setup for GPIO registers
+
 #include <stdint.h>
 
 #define BIT(x) (1UL << (x))
@@ -10,16 +13,25 @@
 #define PINBANK(pin) (pin >> 8)
 
 struct gpio_t {
-	volatile uint32_t MODER;
-	volatile uint32_t OTYPER;
-	volatile uint32_t OSPEEDR;
-	volatile uint32_t PUPDR;
-	volatile uint32_t IDR;
-	volatile uint32_t ODR;
+	volatile uint32_t MODER;	// Port Mode Register
+	volatile uint32_t OTYPER;	// Port Output Type Register
+	volatile uint32_t OSPEEDR;	// Port Output Speed Register
+	volatile uint32_t PUPDR;	// Port Pull-up/Pull-down Register
+	volatile uint32_t IDR;		// Port Input Data Register
+	volatile uint32_t ODR;		// Port Output Data Register
+	volatile uint32_t BSRR;		// Port Bit Set/Reset Register
+	volatile uint32_t LCKR;		// Port Configuration Lock Register
+	volatile uint32_t AFRL;		// Alternate Function Low Register
+	volatile uint32_t AFRH;		// Alternate Function High Register
 };
 
 
-enum {GPIO_MODE_INPUT, GPIO_MODE_OUTPUT, GPIO_MODE_AF, GPIO_MODE_ANALOG};
+enum {
+	GPIO_MODE_INPUT, 
+	GPIO_MODE_OUTPUT, 
+	GPIO_MODE_AF, 
+	GPIO_MODE_ANALOG
+};
 
 static inline void gpio_set_mode(uint16_t pin_p, uint8_t mode_p) {
 	struct gpio_t *gpio = GPIO(PINBANK(pin_p));
