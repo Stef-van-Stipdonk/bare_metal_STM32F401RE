@@ -1,5 +1,6 @@
 *.elf
 *.bin
+*.map
 *.o
 .cache
 .rgignore
