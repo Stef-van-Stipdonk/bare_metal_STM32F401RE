@@ -1,5 +1,6 @@
 *.elf
 *.bin
 *.o
+.cache
 .rgignore
 compile_commands.json
