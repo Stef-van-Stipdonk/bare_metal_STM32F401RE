@@ -1,4 +1,8 @@
+#include "gpio.h"
+
+
 int main(void) {
+	gpio_set_mode(PIN('A', 5), GPIO_MODE_OUTPUT);
 	return 0;
 }
 
