@@ -1,1 +1,2 @@
 * Actually move the _reset entry and the initialization code to a boot.nasm file or something
+* Actually enable the clock for GPIO_A

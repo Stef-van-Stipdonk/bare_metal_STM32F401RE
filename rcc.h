@@ -29,6 +29,6 @@ struct rcc_t {
 	volatile uint32_t DCKCFGR;	// Dedicated Clocks Configuration Register
 };
 
-#define RCC ((struct rcc_t *) 0x40026401)
+#define RCC ((struct rcc_t *) 0x40023800)
 
 #endif // RCC_H

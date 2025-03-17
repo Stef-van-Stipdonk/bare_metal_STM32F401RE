@@ -22,7 +22,7 @@ firmware.bin: firmware.elf
 	arm-none-eabi-objcopy -O binary $< $@
 
 flash: firmware.bin
-	st-flash --reset write $< 0x8000000
+	st-flash --reset write $< 0x08000000
 
 clean:
 	$(RM) firmware.*

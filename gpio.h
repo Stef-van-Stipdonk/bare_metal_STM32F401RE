@@ -5,6 +5,7 @@
 // Setup for GPIO registers
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define BIT(x) (1UL << (x))
 #define GPIO(bank) ((struct gpio_t *) (0x40020000 + 0x400 * (bank)))
@@ -32,6 +33,11 @@ enum {
 	GPIO_MODE_AF, 
 	GPIO_MODE_ANALOG
 };
+
+static inline void gpio_write(uint16_t pin_p, bool val_p) {
+	struct gpio_t *gpio = GPIO(PINBANK(pin_p));
+	gpio->BSRR = (1U << PINNO(pin_p)) << (val_p ? 0 : 16);
+}
 
 static inline void gpio_set_mode(uint16_t pin_p, uint8_t mode_p) {
 	struct gpio_t *gpio = GPIO(PINBANK(pin_p));
