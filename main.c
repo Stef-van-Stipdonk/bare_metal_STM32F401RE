@@ -1,39 +1,22 @@
 #include "gpio.h"
 #include "rcc.h"
+#include "systick.h"
 #include <stdint.h>
-
-static inline void spin(volatile uint32_t count_p) {
-	while (count_p--) (void) 0;
-}
 
 int main(void) {
 	uint16_t led = PIN('A', 5);
 	RCC->AHB1ENR |= BIT(0);
+	systick_init(16000000 / 1000); // TODO: understand what good defaults are for this.
 	gpio_set_mode(led, GPIO_MODE_OUTPUT);
-	for (;;) {
-		GPIO(PINBANK(led))->BSRR = (1U << 5);spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		GPIO(PINBANK(led))->BSRR = (1U << (5 + 16));  // Reset PA5
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-		spin(999999);
-	}
 
+	uint32_t timer, period = 5000;
+	for (;;) {
+		if (timer_expired(&timer, period, s_ticks)) {
+			static bool led_state;
+			gpio_write(led, led_state);
+			led_state = !led_state;
+		}
+	}
 }
 
 __attribute__((naked, noreturn)) void _reset(void) {
@@ -52,5 +35,5 @@ __attribute__((naked, noreturn)) void _reset(void) {
 extern void _estack(void);
 
 __attribute__((section(".vectors"))) void (* const tab[16 + 91])(void) = {
-	_estack, _reset
+	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SysTick_Handler
 };
