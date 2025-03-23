@@ -1,20 +1,21 @@
 #include "gpio.h"
 #include "rcc.h"
+#include "uart.h"
 #include "systick.h"
 #include <stdint.h>
 
 int main(void) {
 	uint16_t led = PIN('A', 5);
-	RCC->AHB1ENR |= BIT(0);
-	systick_init(16000000 / 1000); // TODO: understand what good defaults are for this.
+	systick_init(84000000 / 1000);
 	gpio_set_mode(led, GPIO_MODE_OUTPUT);
-
-	uint32_t timer, period = 5000;
+	uart_init(UART2, 115200);
+	uint32_t timer, period = 500;
 	for (;;) {
 		if (timer_expired(&timer, period, s_ticks)) {
 			static bool led_state;
 			gpio_write(led, led_state);
 			led_state = !led_state;
+			uart_write_buf(UART2, "hi\r\n", 4);
 		}
 	}
 }
@@ -25,8 +26,6 @@ __attribute__((naked, noreturn)) void _reset(void) {
     for (long *dst = &_sdata, *src = &_sidata; dst < &_edata;) *dst++ = *src++;  // Copy data section
 
     // Debug: Indicate reset handler is called
-    GPIO(PINBANK(PIN('A', 5)))->BSRR = (1U << 5);  // Set PA5
-    spin(999999);
 
     main();  // Call main()
     for (;;) (void) 0;  // Infinite loop if main() returns

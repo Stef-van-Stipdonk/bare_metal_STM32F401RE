@@ -1,2 +1,14 @@
-* Actually move the _reset entry and the initialization code to a boot.nasm file or something
-* Actually enable the clock for GPIO_A
+
+
+======
+2025-03-23
+
+X Setup systick interrupt
+X Setup USART
+
+Notes:
+Seems like the values of USART setup are correct, but not getting any output on picocom.
+Debug time next sesh.
+
+Side quests:
+* Do some more bitwise operations to get a better feel for them
