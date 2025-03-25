@@ -1,6 +1,12 @@
 
 
 ======
+2025-03-25
+
+* Clean up code base
+* Initialize the clock to 84Mhz instead of the default 16Mhz
+
+======
 2025-03-23
 
 X Setup systick interrupt
@@ -8,7 +14,7 @@ X Setup USART
 
 Notes:
 Seems like the values of USART setup are correct, but not getting any output on picocom.
-Debug time next sesh.
+Debug time next sesh. (Fixed this, was mapping uart to PDx not PAx)
 
 Side quests:
 * Do some more bitwise operations to get a better feel for them

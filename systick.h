@@ -40,10 +40,11 @@
 */
 
 #include <stdint.h>
-#include "rcc.h"
 #include <stdbool.h>
+#include "rcc.h"
+#include "common_defines.h"
 
-#define BIT(x) (1UL << (x))
+
 
 struct systick_t {
 	volatile uint32_t CTRL;		// Control and Status Register

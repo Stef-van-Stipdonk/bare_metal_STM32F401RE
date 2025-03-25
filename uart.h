@@ -3,12 +3,10 @@
 #ifndef UART_H
 #define UART_H 1
 
+#include "common_defines.h"
 #include "rcc.h"
 #include <stddef.h>
 
-#define BIT(x) (1UL << (x))
-#define PIN(bank, num) ((((bank) - 'A') << 8) | (num))
-#define FREQ 16000000 // 16 Mhz
 
 struct uart_t {
 	volatile uint32_t SR;	// Status Register

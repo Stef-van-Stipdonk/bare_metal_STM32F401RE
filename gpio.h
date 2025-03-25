@@ -8,12 +8,7 @@
 #include <stdbool.h>
 
 #include "rcc.h"
-
-#define BIT(x) (1UL << (x))
-#define GPIO(bank) ((struct gpio_t *) (0x40020000 + 0x400 * (bank)))
-#define PIN(bank, num) ((((bank) - 'A') << 8) | (num))
-#define PINNO(pin) (uint8_t)(pin & 255)
-#define PINBANK(pin) (pin >> 8)
+#include "common_defines.h"
 
 struct gpio_t {
 	volatile uint32_t MODER;	// Port Mode Register
