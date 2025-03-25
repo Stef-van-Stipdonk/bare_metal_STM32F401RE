@@ -8,7 +8,7 @@
 
 #define BIT(x) (1UL << (x))
 #define PIN(bank, num) ((((bank) - 'A') << 8) | (num))
-#define FREQ 84000000 // 84 Mhz
+#define FREQ 16000000 // 16 Mhz
 
 struct uart_t {
 	volatile uint32_t SR;	// Status Register
@@ -34,14 +34,14 @@ static inline void uart_init(struct uart_t *uart_p, unsigned long baud_p) {
 
 	if (uart_p == UART1) {
 		RCC->APB2ENR |= BIT(4);
-		tx = PIN('B', 6);
-		rx = PIN('B', 7);
+		tx = PIN('A', 9);
+		rx = PIN('A', 10);
 	}
 
 	if (uart_p == UART2) {
 		RCC->APB1ENR |= BIT(17);
-		tx = PIN('D', 5);
-		rx = PIN('D', 6);
+		tx = PIN('A', 2);
+		rx = PIN('A', 3);
 	}
 
 	gpio_set_mode(tx, GPIO_MODE_AF);
