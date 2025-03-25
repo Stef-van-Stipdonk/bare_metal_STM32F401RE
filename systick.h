@@ -44,8 +44,6 @@
 #include "rcc.h"
 #include "common_defines.h"
 
-
-
 struct systick_t {
 	volatile uint32_t CTRL;		// Control and Status Register
 	volatile uint32_t LOAD;		// Reload Value Register
@@ -54,14 +52,23 @@ struct systick_t {
 };
 
 #define SYSTICK ((struct systick_t *) 0xE000E010)
+#define STK_LOAD_MAX_VALUE 0xffffff
+
+#define SYSTICK_CTRL_ENABLE BIT(0)
+#define SYSTICK_CTRL_TICKINT BIT(1)
+#define SYSTICK_CTRL_CLKSOURCE BIT(2)
 
 static inline void systick_init(uint32_t ticks_p) {
-	if ((ticks_p - 1) > 0xffffff) return;
-	
-	SYSTICK->LOAD = ticks_p - 1;
+	uint32_t ticks = ticks_p - 1; // Ticks should be N-1 for repeat interrupts
+
+	if (ticks <= 0 && ticks > STK_LOAD_MAX_VALUE) {
+		return;
+	}
+
+	SYSTICK->LOAD = ticks;
 	SYSTICK->VAL = 0;
-	SYSTICK->CTRL = BIT(0) | BIT(1) | BIT(2);
-	RCC->APB2ENR |= BIT(14);
+	SYSTICK->CTRL = SYSTICK_CTRL_ENABLE | SYSTICK_CTRL_TICKINT | SYSTICK_CTRL_CLKSOURCE;
+	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
 }
 
 static volatile uint32_t s_ticks;
@@ -69,12 +76,21 @@ void SysTick_Handler(void) {
 	s_ticks++;
 }
 
-bool timer_expired(uint32_t *t, uint32_t prd, uint32_t now) {
-	if (now + prd < *t) *t = 0;                    // Time wrapped? Reset timer
-	if (*t == 0) *t = now + prd;                   // First poll? Set expiration
-	if (*t > now) return false;                    // Not expired yet, return
-	*t = (now - *t) > prd ? now + prd : *t + prd;  // Next expiration time
-	return true;                                   // Expired, return true
+bool timer_expired(uint32_t *timer_p, uint32_t period_p, uint32_t now_p) {
+	if (now_p + period_p < *timer_p) {
+		*timer_p = 0;
+	}
+
+	if (*timer_p == 0) {
+		*timer_p = now_p + period_p;
+	}
+
+	if (*timer_p > now_p) {
+		return false;
+	}
+
+	*timer_p = (now_p - *timer_p) > period_p ? now_p + period_p : *timer_p + period_p;
+	return true;
 }
 
 #endif // SYSTICK_H

@@ -63,4 +63,6 @@ struct rcc_t {
 
 #define RCC ((struct rcc_t *) 0x40023800)
 
+#define RCC_APB2ENR_SYSCFGEN BIT(14)
+
 #endif // RCC_H
