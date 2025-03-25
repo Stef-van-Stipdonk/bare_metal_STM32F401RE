@@ -19,7 +19,9 @@ struct uart_t {
 };
 
 #define UART1 ((struct uart_t *) 0x40011000)
+
 #define UART2 ((struct uart_t *) 0x40004400)
+#define UART_IRQ_NUMBER 38
 
 static inline void spin(volatile uint32_t count) {
   while (count--) (void) 0;

@@ -1,20 +1,56 @@
+[C] = Currently working on this
+[X] = Done
+[*] = Open item
 
+GENERAL TODOS:
+[C] UART Command Parser:
+	Implement a CLI over UART such that I can send a command like "LED ON" or "LED OFF" to turn off the user led. 
+
+[*] UART Buffering:
+	Implement a circular buffer for UART RX/TX to handle big blobs of data.
+
+[*] Software based PWM (Pulse-Width Modulation):
+	Use PWM to alter the brightness of the user led.
+
+[*] Allow the changing of blinking rates through UART CLI:
+	Send a command like "DELAY 200" to set the delay.
+	(Ensure it is non-blocking)
+
+[*] Read Internal Temperature Sensor and Internal Voltage:
+	Read and output to UART the value of the internal temperature sensor.
+
+[*] Setup the RTC (Real Time Clock):
+	Log timestamps
+
+[*] Buttonless "button":
+	Use a floating GPIO pin as a touch sensor.
+	When I touch the pin, capacitance changes can be detected.
+	Log the touching to console.
+
+[*] Custom printf
+	Idk do printf, but custom <3
+
+[*] Implement a simple RTOS
+	Learn about scheduling, semaphores, etc
 
 ======
 2025-03-25
 
-* Clean up code base
-* Initialize the clock to 84Mhz instead of the default 16Mhz
+[X] Clean up code base
+[X] Read the documentation on the NVIC
+[X] Make a plan of attack for implementing the NVIC
+	The fantastic current plan is to setup the basic struct and just enable what I need to enable.
+	I'll deal with setting up all the macros later, not worth it for now.
 
 ======
 2025-03-23
 
-X Setup systick interrupt
-X Setup USART
+[X] Setup systick interrupt
+[X] Setup USART
 
 Notes:
 Seems like the values of USART setup are correct, but not getting any output on picocom.
 Debug time next sesh. (Fixed this, was mapping uart to PDx not PAx)
 
 Side quests:
-* Do some more bitwise operations to get a better feel for them
+[*] Do some more bitwise operations to get a better feel for them

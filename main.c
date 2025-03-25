@@ -4,10 +4,11 @@
 #include <stdint.h>
 
 int main(void) {
-	uint16_t led = PIN('A', 5);
 	systick_init(FREQ / 1000);
-	gpio_set_mode(led, GPIO_MODE_OUTPUT);
 	uart_init(UART2, 115200);
+
+	uint16_t led = PIN('A', 5);
+	gpio_set_mode(led, GPIO_MODE_OUTPUT);
 	uint32_t timer, period = 500;
 	for (;;) {
 		if (timer_expired(&timer, period, s_ticks)) {
