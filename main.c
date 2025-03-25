@@ -1,12 +1,11 @@
 #include "gpio.h"
-#include "rcc.h"
 #include "uart.h"
 #include "systick.h"
 #include <stdint.h>
 
 int main(void) {
 	uint16_t led = PIN('A', 5);
-	systick_init(84000000 / 1000);
+	systick_init(FREQ / 1000);
 	gpio_set_mode(led, GPIO_MODE_OUTPUT);
 	uart_init(UART2, 115200);
 	uint32_t timer, period = 500;
