@@ -1,6 +1,44 @@
 #ifndef SYSTICK_H
 #define SYSTICK_H 1
 
+/*
+ * System timer
+ * Width: 24 bit
+ *
+ * DESCRIPTION:
+ * The timer counts down from the "reload value" (STK_LOAD) to zero,
+ * then reloads (wraps to) the "reload value" (STK_LOAD) set in the STK_LOAD register.
+ *
+ * More info:
+ *	Section 4.5 | PM0214 Programming manual
+ * 
+ * REGISTERS:
+ *	(STK_CTRL) SysTick control and status register
+ *		Address:		0xE000E010
+ *		Type:			RW
+ *		Required privilege:	Privileged
+ *		Reset Value:		0x00000000
+ *
+ *	(STK_LOAD) SysTick reload value register
+ *		Address:		0xE000E014
+ *		Type:			RW
+ *		Required privilege:	Privileged
+ *		Reset Value:		Unknown
+ *
+ *	(STK_VAL) Systick current value register
+ *		Address:		0xE000E018
+ *		Type:			RW
+ *		Required privilege:	Privileged
+ *		Reset Value:		Unknown
+ *
+ *	(STK_CALIB) Calibration value register
+ *		Address:		0xE000E01C
+ *		Type:			RO
+ *		Required privilege:	Privileged
+ *		Reset Value:		0xC0000000
+ *
+*/
+
 #include <stdint.h>
 #include "rcc.h"
 #include <stdbool.h>
@@ -17,7 +55,7 @@ struct systick_t {
 #define SYSTICK ((struct systick_t *) 0xE000E010)
 
 static inline void systick_init(uint32_t ticks_p) {
-	if ((ticks_p - 1) > 0xffffff) return; // Timer is 24 bit
+	if ((ticks_p - 1) > 0xffffff) return;
 	
 	SYSTICK->LOAD = ticks_p - 1;
 	SYSTICK->VAL = 0;
