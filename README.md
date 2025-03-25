@@ -6,3 +6,4 @@ As in no libraries; just me assembly, C files, some datasheets and probably a cu
  - Basic GPIOs
  - RCC
  - Systick timer
+ - UART
