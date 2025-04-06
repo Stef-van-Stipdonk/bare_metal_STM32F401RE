@@ -9,5 +9,7 @@
 
 
 #define FREQ 16000000 // 16 Mhz
+#define APB1_FREQ 42000000 // 42 Mhz
+#define APB2_FREQ 84000000 // 84 Mhz
 
 #endif // COMMON_DEFINES_H
