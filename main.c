@@ -6,6 +6,7 @@
 int main(void) {
 	systick_init(FREQ / 1000);
 	uart_init(UART2, 115200);
+	uart_write_buf(UART2, "[INFO] UART initialized\r\n\0");
 
 	uint16_t led = PIN('A', 5);
 	gpio_set_mode(led, GPIO_MODE_OUTPUT);
@@ -15,7 +16,6 @@ int main(void) {
 			static bool led_state;
 			gpio_write(led, led_state);
 			led_state = !led_state;
-			uart_write_buf(UART2, "hi\r\n", 4);
 		}
 	}
 }
