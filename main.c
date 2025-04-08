@@ -1,12 +1,54 @@
 #include "gpio.h"
+#include "rcc.h"
 #include "uart.h"
 #include "systick.h"
+#include "flash.h"
+#include "common_defines.h"
 #include <stdint.h>
 
+void init() {
+	RCC->CR |= (1U << 16); // Turn on HSE clock
+	
+	while ((RCC->CR & (1U << 17)) == 0) // IS HSE ready
+		;
+
+	// HSE = 8 MHZ, target SYSCLK = 84 Mhz:
+	// - pllm = 8 devices 8 Mhz to 1 Mhz
+	// - plln = 336 multiplies 1 Mhz to 336 Mhz (VC0 frequency)
+	// - pllp = 4 devides 336 Mhz by 4 to get 84 Mhz
+	// - pllsrc = 1 selects HSE as PLL source
+	// - pllq = 7 for usb and sdio etc (or so I've read)
+	const uint32_t pllm = 8;
+	const uint32_t plln = 336;
+	const uint32_t pllp = 4;
+	const uint32_t pllsrc = 1;
+	const uint32_t pllq = 7;
+
+	RCC->PLLCFGR |= pllm << 0;
+	RCC->PLLCFGR |= plln << 6;
+	RCC->PLLCFGR |= pllp << 16;
+	RCC->PLLCFGR |= pllsrc << 22;
+	RCC->PLLCFGR |= pllq << 24;
+
+	RCC->CR |= (1U << 24);
+	while ((RCC->CR & (1U << 25)) == 0) // Wait for PLL lock
+		;
+
+	FLASH->ACR &= ~7U;
+	FLASH->ACR |= 2;
+
+	RCC->CFGR &= ~(3U << 0);
+	RCC->CFGR |= 2U << 0;
+
+	while ((RCC->CFGR & 0xCU) != (2U << 2))
+		;
+}
+
 int main(void) {
-	systick_init(FREQ / 1000);
+	init();
+	systick_init(INITIAL_CPU_FREQ);
 	uart_init(UART2, 115200);
-	uart_write_buf(UART2, "[INFO] UART initialized\r\n\0");
+	uart_write_buf(UART2, "[INFO] UART initialized\r\n");
 
 	uint16_t led = PIN('A', 5);
 	gpio_set_mode(led, GPIO_MODE_OUTPUT);

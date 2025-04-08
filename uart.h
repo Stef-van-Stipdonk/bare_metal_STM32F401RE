@@ -28,7 +28,7 @@ static inline void spin(volatile uint32_t count) {
 
 // TODO: Look at setting up clocks, seems like I have my config wrong.
 
-static inline void uart_init(struct uart_t *uart_p, unsigned long baud_p) {
+static inline void uart_init(struct uart_t *uart_p, float baud_p) {
 	// TODO: Look at RCC clock enabling
 	// TODO: Look at usart flow control
 	// TODO: Look at setting databits
@@ -54,12 +54,21 @@ static inline void uart_init(struct uart_t *uart_p, unsigned long baud_p) {
 
 	if (uart_p == UART1) {
 		RCC->APB2ENR |= BIT(4);
+
+		float usartdiv = (float) APB2_MAX_FREQ / (16.0f * baud_p);
+		float mantissa = usartdiv;
+		uint32_t fraction = (uint32_t)((usartdiv - mantissa) * 16.0f + 0.5f);
+		uart_p->BRR = ((uint32_t)mantissa << 4) | (fraction & 0xF);
 		tx = PIN('A', 9);
 		rx = PIN('A', 10);
 	}
 
 	if (uart_p == UART2) {
 		RCC->APB1ENR |= BIT(17);
+		float usartdiv = (float) APB1_MAX_FREQ / (16.0f * baud_p);
+		float mantissa = usartdiv;
+		uint32_t fraction = (uint32_t)((usartdiv - mantissa) * 16.0f + 0.5f);
+		uart_p->BRR = ((uint32_t)mantissa << 4) | (fraction & 0xF);
 		tx = PIN('A', 2);
 		rx = PIN('A', 3);
 	}
@@ -72,7 +81,6 @@ static inline void uart_init(struct uart_t *uart_p, unsigned long baud_p) {
 
 	uart_p->CR1 &= ~(1U << 12); // Set M bit to 0, meaning 8 bit word length
 	uart_p->CR2 &= ~(1u << 12 | 1u << 13); // Set stopbits to 0
-	uart_p->BRR = FREQ / baud_p;
 	uart_p->CR1 |= BIT(13); // Flip UE register: USART enable
 	uart_p->CR1 |= BIT(3);
 	uart_p->CR1 |= BIT(2);

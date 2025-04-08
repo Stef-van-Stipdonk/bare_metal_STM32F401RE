@@ -7,9 +7,10 @@
 #define PINNO(pin) (uint8_t)(pin & 255)
 #define PINBANK(pin) (pin >> 8)
 
-
-#define FREQ 16000000 // 16 Mhz
-#define APB1_FREQ 42000000 // 42 Mhz
-#define APB2_FREQ 84000000 // 84 Mhz
+#define INITIAL_CPU_FREQ 16000000 // 16 Mhz
+#define APB1_MAX_FREQ 42000000 // 42 Mhz
+#define APB2_MAX_FREQ 84000000 // 42 Mhz
+#define AHB1_MAX_FREQ 84000000 // 84 Mhz
+#define AHB2_MAX_FREQ 84000000 // 84 Mhz
 
 #endif // COMMON_DEFINES_H
