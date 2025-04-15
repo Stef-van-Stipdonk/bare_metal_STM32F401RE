@@ -7,58 +7,50 @@
 #include <stdint.h>
 
 void init() {
-	RCC->CR |= (1U << 16); // Turn on HSE clock
+	RCC->CR |= RCC_CR_HSION; // Enable to HSI
+
+	while (!(RCC->CR & RCC_CR_HSIRDY)) // Wait for HSI to be ready
+		;
 	
-	while ((RCC->CR & (1U << 17)) == 0) // IS HSE ready
+	RCC->CFGR |= RCC_CFGR_SW_HSI; // Set clocksource to HSI
+
+	while (!(RCC->CFGR & RCC_CFGR_SWS_HSI)) // Wait until HSI is used as the system clock
 		;
 
-	// HSE = 8 MHZ, target SYSCLK = 84 Mhz:
-	// - pllm = 8 devices 8 Mhz to 1 Mhz
-	// - plln = 336 multiplies 1 Mhz to 336 Mhz (VC0 frequency)
-	// - pllp = 4 devides 336 Mhz by 4 to get 84 Mhz
-	// - pllsrc = 1 selects HSE as PLL source
-	// - pllq = 7 for usb and sdio etc (or so I've read)
-	const uint32_t pllm = 8;
-	const uint32_t plln = 336;
-	const uint32_t pllp = 4;
-	const uint32_t pllsrc = 1;
-	const uint32_t pllq = 7;
+	FLASH->ACR 
+		|= FLASH_ACR_LATENCY_2WS // Based on 84 Mhz clock
+		| FLASH_ACR_PRFTEN
+		| FLASH_ACR_ICEN
+		| FLASH_ACR_DCEN;
 
-	RCC->PLLCFGR |= pllm << 0;
-	RCC->PLLCFGR |= plln << 6;
-	RCC->PLLCFGR |= pllp << 16;
-	RCC->PLLCFGR |= pllsrc << 22;
-	RCC->PLLCFGR |= pllq << 24;
+	// PLLM = 16
+	// PLLN = 336
+	// PLLP = 0b01 (which is 4 in the datasheet)
+	// HSI  = 16 Mhz
+	// (HSI / PLLM) * PLLN / PLLP = SYCLK
+	RCC->PLLCFGR 
+		|= 16 << RCC_PLLCFGR_PLLM_POS	// Set PLLM
+		| 336 << RCC_PLLCFGR_PLLN_POS	// Set PLLN
+		| 0b01 << RCC_PLLCFGR_PLLP_POS	// Set PLLP
+		| RCC_PLLCFGR_PLLSRC_HSI;	// Set source HSI
+	
+	RCC->CR |= RCC_CR_PLLON; // Enable PLL
 
-	RCC->CR |= (1U << 24);
-	while ((RCC->CR & (1U << 25)) == 0) // Wait for PLL lock
+	while (!(RCC->CR & RCC_CR_PLLRDY)) // Wait for PLL to be ready
 		;
 
-	FLASH->ACR &= ~7U;
-	FLASH->ACR |= 2;
+	RCC->CFGR |= RCC_CFGR_SW_PLL; // Set PLL as the system clock source
 
-	RCC->CFGR &= ~(3U << 0);
-	RCC->CFGR |= 2U << 0;
-
-	while ((RCC->CFGR & 0xCU) != (2U << 2))
+	while (!(RCC->CFGR & RCC_CFGR_SWS_PLL)) // Wait for PLL to be set as the clock source
 		;
 }
 
 int main(void) {
 	init();
-	systick_init(INITIAL_CPU_FREQ);
 	uart_init(UART2, 115200);
 	uart_write_buf(UART2, "[INFO] UART initialized\r\n");
-
-	uint16_t led = PIN('A', 5);
-	gpio_set_mode(led, GPIO_MODE_OUTPUT);
-	uint32_t timer, period = 500;
+ 
 	for (;;) {
-		if (timer_expired(&timer, period, s_ticks)) {
-			static bool led_state;
-			gpio_write(led, led_state);
-			led_state = !led_state;
-		}
 	}
 }
 
