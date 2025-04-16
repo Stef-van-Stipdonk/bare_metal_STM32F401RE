@@ -28,7 +28,7 @@ static inline void spin(volatile uint32_t count) {
 
 // TODO: Look at setting up clocks, seems like I have my config wrong.
 
-static inline void uart_init(struct uart_t *uart_p, float baud_p) {
+static inline void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	// TODO: Look at RCC clock enabling
 	// TODO: Look at usart flow control
 	// TODO: Look at setting databits
@@ -54,21 +54,18 @@ static inline void uart_init(struct uart_t *uart_p, float baud_p) {
 
 	if (uart_p == UART1) {
 		RCC->APB2ENR |= BIT(4);
-
-		float usartdiv = (float) APB2_MAX_FREQ / (16.0f * baud_p);
-		float mantissa = usartdiv;
-		uint32_t fraction = (uint32_t)((usartdiv - mantissa) * 16.0f + 0.5f);
-		uart_p->BRR = ((uint32_t)mantissa << 4) | (fraction & 0xF);
+		uint32_t uartdiv = (APB2_MAX_FREQ + (baud_p / 2)) / baud_p;
+		uart_p->BRR = (uartdiv & ~0xFU) | ((uartdiv & ~0xFU) >> 1);
 		tx = PIN('A', 9);
 		rx = PIN('A', 10);
 	}
 
 	if (uart_p == UART2) {
 		RCC->APB1ENR |= BIT(17);
-		float usartdiv = (float) APB1_MAX_FREQ / (16.0f * baud_p);
-		float mantissa = usartdiv;
-		uint32_t fraction = (uint32_t)((usartdiv - mantissa) * 16.0f + 0.5f);
-		uart_p->BRR = ((uint32_t)mantissa << 4) | (fraction & 0xF);
+		uint32_t usartdiv  = (APB1_MAX_FREQ + (baud_p >> 1)) / baud_p;
+		uint32_t mantissa  =  usartdiv / 16;
+		uint32_t fraction  =  usartdiv - (mantissa * 16);
+		uart_p->BRR = (mantissa << 4) | (fraction & 0xF);
 		tx = PIN('A', 2);
 		rx = PIN('A', 3);
 	}

@@ -17,11 +17,15 @@ void init() {
 	while (!(RCC->CFGR & RCC_CFGR_SWS_HSI)) // Wait until HSI is used as the system clock
 		;
 
-	FLASH->ACR 
+	FLASH->ACR
 		|= FLASH_ACR_LATENCY_2WS // Based on 84 Mhz clock
 		| FLASH_ACR_PRFTEN
 		| FLASH_ACR_ICEN
 		| FLASH_ACR_DCEN;
+
+	RCC->CFGR |= (RCC_CFGR_HPRE_NODIV << 4);
+	RCC->CFGR |= (RCC_CFGR_PPRE_DIV2 << 10);
+	RCC->CFGR |= (RCC_CFGR_PPRE_NODIV << 13);
 
 	// PLLM = 16
 	// PLLN = 336
@@ -32,6 +36,7 @@ void init() {
 		|= 16 << RCC_PLLCFGR_PLLM_POS	// Set PLLM
 		| 336 << RCC_PLLCFGR_PLLN_POS	// Set PLLN
 		| 0b01 << RCC_PLLCFGR_PLLP_POS	// Set PLLP
+		| 7 << RCC_PLLCFGR_PLLQ_POS	// Set PLLQ
 		| RCC_PLLCFGR_PLLSRC_HSI;	// Set source HSI
 	
 	RCC->CR |= RCC_CR_PLLON; // Enable PLL
@@ -47,6 +52,9 @@ void init() {
 
 int main(void) {
 	init();
+	systick_init(AHB_MAX_FREQ / 1000);
+	RCC->AHB1ENR |= BIT(0);
+	for (volatile int i = 0; i < 1000000; ++i);
 	uart_init(UART2, 115200);
 	uart_write_buf(UART2, "[INFO] UART initialized\r\n");
  
