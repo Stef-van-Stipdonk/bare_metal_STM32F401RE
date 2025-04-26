@@ -7,3 +7,5 @@ As in no libraries; just me assembly, C files, some datasheets and probably a cu
  - RCC
  - Systick timer
  - UART
+ - Clock initialization
+ - I2C
