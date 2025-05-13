@@ -58,17 +58,17 @@ struct systick_t {
 #define SYSTICK_CTRL_TICKINT BIT(1)
 #define SYSTICK_CTRL_CLKSOURCE BIT(2)
 
-static inline void systick_init(uint32_t ticks_p) {
-	uint32_t ticks = ticks_p - 1; // Ticks should be N-1 for repeat interrupts
+static inline void systick_init(uint32_t ahb, uint32_t frequency) {
+	uint32_t ticks = ahb / frequency;
 
+	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
 	if (ticks <= 0 && ticks > STK_LOAD_MAX_VALUE) {
 		return;
 	}
 
-	SYSTICK->LOAD = ticks;
+	SYSTICK->LOAD = ticks - 1;
 	SYSTICK->VAL = 0;
-	SYSTICK->CTRL = SYSTICK_CTRL_ENABLE | SYSTICK_CTRL_TICKINT | SYSTICK_CTRL_CLKSOURCE;
-	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
+	SYSTICK->CTRL = SYSTICK_CTRL_ENABLE | SYSTICK_CTRL_TICKINT;
 }
 
 static volatile uint32_t s_ticks;
