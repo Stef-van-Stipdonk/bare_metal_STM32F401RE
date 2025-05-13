@@ -1,4 +1,7 @@
 TODO:
+6. Setup interrupts
+7. Setup timers
+8. Setup define macros for cfgr registers
 
 DONE:
 1. Update Makefile to support `include/` and `lib/` directories
