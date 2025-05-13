@@ -1,8 +1,8 @@
 TODO:
-3. Seperate gpio.h file into header and implementation files
 
 DONE:
 1. Update Makefile to support `include/` and `lib/` directories
 4. Add memset stub
 5. Add memcpy stub
 2. Seperate uart.h file into header and implementation files
+3. Seperate gpio.h file into header and implementation files

@@ -4,3 +4,4 @@ Releases:
 [2025-05-13] T4: Add memset stub
 [2025-05-13] T5: Add memcpy stub
 [2025-05-13] T2: Seperate uart.h file into header and implementation files
+[2025-05-13] T3: Seperate gpio.h file into header and implementation files
