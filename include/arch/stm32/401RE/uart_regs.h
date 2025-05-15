@@ -55,7 +55,7 @@ struct uart_t {
 //
 // USART_SR_NF
 //
-#define UART_SR_NF_POS     1
+#define UART_SR_NF_POS     2
 #define UART_SR_NF_WIDTH   1
 #define UART_SR_NF_MASK    (0x1 << UART_SR_NF_POS)
 
@@ -71,7 +71,7 @@ struct uart_t {
 //
 // USART_SR_ORE
 //
-#define UART_SR_ORE_POS     1
+#define UART_SR_ORE_POS     3
 #define UART_SR_ORE_WIDTH   1
 #define UART_SR_ORE_MASK    (0x1 << UART_SR_ORE_POS)
 
@@ -87,7 +87,7 @@ struct uart_t {
 //
 // USART_SR_IDLE
 //
-#define UART_SR_IDLE_POS     1
+#define UART_SR_IDLE_POS     4
 #define UART_SR_IDLE_WIDTH   1
 #define UART_SR_IDLE_MASK    (0x1 << UART_SR_IDLE_POS)
 
@@ -103,7 +103,7 @@ struct uart_t {
 //
 // USART_SR_RXNE
 //
-#define UART_SR_RXNE_POS     1
+#define UART_SR_RXNE_POS     5
 #define UART_SR_RXNE_WIDTH   1
 #define UART_SR_RXNE_MASK    (0x1 << UART_SR_RXNE_POS)
 
@@ -119,7 +119,7 @@ struct uart_t {
 //
 // USART_SR_TC
 //
-#define UART_SR_TC_POS     1
+#define UART_SR_TC_POS     6
 #define UART_SR_TC_WIDTH   1
 #define UART_SR_TC_MASK    (0x1 << UART_SR_TC_POS)
 
@@ -135,7 +135,7 @@ struct uart_t {
 //
 // USART_SR_TXE
 //
-#define UART_SR_TXE_POS     1
+#define UART_SR_TXE_POS     7
 #define UART_SR_TXE_WIDTH   1
 #define UART_SR_TXE_MASK    (0x1 << UART_SR_TXE_POS)
 
@@ -151,7 +151,7 @@ struct uart_t {
 //
 // USART_SR_LBD
 //
-#define UART_SR_LBD_POS     1
+#define UART_SR_LBD_POS     8
 #define UART_SR_LBD_WIDTH   1
 #define UART_SR_LBD_MASK    (0x1 << UART_SR_LBD_POS)
 
@@ -167,7 +167,7 @@ struct uart_t {
 //
 // USART_SR_CTS
 //
-#define UART_SR_CTS_POS     1
+#define UART_SR_CTS_POS     9
 #define UART_SR_CTS_WIDTH   1
 #define UART_SR_CTS_MASK    (0x1 << UART_SR_CTS_POS)
 
