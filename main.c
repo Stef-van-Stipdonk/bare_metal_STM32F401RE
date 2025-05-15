@@ -1,10 +1,9 @@
 #include "rcc.h"
 #include "uart.h"
-#include "systick.h"
 #include "flash.h"
 #include <stdint.h>
 
-void init() {
+void clocking_init() {
 	RCC->CR |= RCC_CR_HSION; // Enable to HSI
 
 	while (!(RCC->CR & RCC_CR_HSIRDY)) // Wait for HSI to be ready
@@ -64,7 +63,7 @@ void init() {
 }
 
 int main(void) {
-	init();
+	clocking_init();
 	uart_init(UART2, 115200);
 	uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
 
@@ -86,5 +85,5 @@ __attribute__((naked, noreturn)) void _reset(void) {
 extern void _estack(void);
 
 __attribute__((section(".vectors"))) void (* const tab[16 + 91])(void) = {
-	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SysTick_Handler
+	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
 };

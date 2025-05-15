@@ -2,6 +2,8 @@ TODO:
 6. Setup interrupts
 7. Setup timers
 8. Setup define macros for cfgr registers
+10. Add architecture specific compilation
+11. Add uart regs macros
 
 DONE:
 1. Update Makefile to support `include/` and `lib/` directories
@@ -9,3 +11,4 @@ DONE:
 5. Add memcpy stub
 2. Seperate uart.h file into header and implementation files
 3. Seperate gpio.h file into header and implementation files
+9. Split off hw includes from usage functions of uart

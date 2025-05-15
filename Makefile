@@ -1,17 +1,20 @@
 CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
-            -Wformat-truncation -fno-common -Wconversion -Iinclude \
-            -g3 -Os -ffunction-sections -fdata-sections -I. \
-            -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 $(EXTRA_CFLAGS)
+            -Wformat-truncation -fno-common -Wconversion \
+            -g3 -Os -ffunction-sections -fdata-sections \
+            -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 $(EXTRA_CFLAGS) $(P_INC_DIRS)
 
 LDFLAGS ?= -Tlink.ld -nostartfiles -nostdlib -lc -lgcc -Wl,--gc-sections -Wl,-Map=$@.map
 
 SRC_DIR = lib
-INC_DIR = include
 OBJ_DIR = obj
+INC_DIR = include
 BIN = main
 
 SRCS = $(shell find $(SRC_DIR) -name '*.c')
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+INC_DIRS = $(shell find $(INC_DIR) -type d)
+P_INC_DIRS = $(addprefix -I,$(INC_DIRS))
+
 
 MAIN_SRC = main.c
 MAIN_OBJ = $(OBJ_DIR)/main.o
@@ -34,7 +37,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 firmware.elf: $(SOURCES)
 	arm-none-eabi-gcc $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
-
 
 clean:
 	rm -rf $(OBJ_DIR) $(BIN)

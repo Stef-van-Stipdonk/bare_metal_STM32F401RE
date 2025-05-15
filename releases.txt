@@ -1,5 +1,7 @@
 Releases:
 
+[2025-05-15] T9: Split off hw includes from usage functions of uart
+
 [2025-05-13] T1: Update Makefile to support `include/` and `lib/` directories.
 [2025-05-13] T4: Add memset stub
 [2025-05-13] T5: Add memcpy stub
