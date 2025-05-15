@@ -10,6 +10,10 @@ TODO:
 16. Split off clocking setup out of main.c
 17. Setup define macros for rcc registers
 18. Setup define macros for nvic registers
+19. Setup github action to trigger home lab build
+20. Setup github action to HIL testing
+21. Setup GTest for testing
+22. Setup github action for unit testing
 
 DONE:
 1. Update Makefile to support `include/` and `lib/` directories
