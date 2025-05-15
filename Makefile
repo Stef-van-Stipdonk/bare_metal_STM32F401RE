@@ -45,4 +45,8 @@ firmware.elf: $(SOURCES)
 clean:
 	rm -rf $(OBJ_DIR) $(BUILD_NAME) $(BIN)
 
-.PHONY: all clean
+compile_commands.json:
+	make clean
+	bear -- make
+
+.PHONY: all clean firmware.elf

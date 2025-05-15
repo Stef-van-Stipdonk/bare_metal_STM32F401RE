@@ -7,19 +7,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-
-struct gpio_t {
-	volatile uint32_t MODER;	// Port Mode Register
-	volatile uint32_t OTYPER;	// Port Output Type Register
-	volatile uint32_t OSPEEDR;	// Port Output Speed Register
-	volatile uint32_t PUPDR;	// Port Pull-up/Pull-down Register
-	volatile uint32_t IDR;		// Port Input Data Register
-	volatile uint32_t ODR;		// Port Output Data Register
-	volatile uint32_t BSRR;		// Port Bit Set/Reset Register
-	volatile uint32_t LCKR;		// Port Configuration Lock Register
-	volatile uint32_t AFR[2];	// Alternate Function Low Register
-};
-
 enum {
 	GPIO_MODE_INPUT,
 	GPIO_MODE_OUTPUT,

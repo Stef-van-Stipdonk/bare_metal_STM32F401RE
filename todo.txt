@@ -1,9 +1,15 @@
 TODO:
 6. Setup interrupts
 7. Setup timers
-8. Setup define macros for cfgr registers
+8. Setup define macros for uart registers
 10. Add architecture specific compilation
 11. Add uart regs macros
+14. Setup define macros for gpio registers
+15. Split off hw includes from usage functions of rcc
+16. Split off clocking setup out of main.c
+16. Split off clocking setup out of main.c
+17. Setup define macros for rcc registers
+18. Setup define macros for nvic registers
 
 DONE:
 1. Update Makefile to support `include/` and `lib/` directories
@@ -13,3 +19,4 @@ DONE:
 3. Seperate gpio.h file into header and implementation files
 9. Split off hw includes from usage functions of uart
 12. Makefile should put obj files into obj/ and bin files into bin/
+13. Split off hw includes from usage functions of gpio
