@@ -1,5 +1,6 @@
 Releases:
 
+[2025-05-15] T12: *.o files are now in `obj/` and bin files are in `bin/`
 [2025-05-15] T9: Split off hw includes from usage functions of uart
 
 [2025-05-13] T1: Update Makefile to support `include/` and `lib/` directories.
