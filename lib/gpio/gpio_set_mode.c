@@ -1,8 +1,7 @@
-#include "rcc.h"
+#include "rcc_regs.h"
 #include "gpio.h"
 #include "common_defines.h"
 #include "gpio_regs.h"
-
 
 void gpio_set_mode(uint16_t pin_p, uint8_t mode_p) {
 	struct gpio_t *gpio = GPIO(PINBANK(pin_p));

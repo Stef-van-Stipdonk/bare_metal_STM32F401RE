@@ -1,5 +1,5 @@
 #include "uart.h"
-#include "rcc.h"
+#include "rcc_regs.h"
 #include "common_defines.h"
 #include "gpio.h"
 #include "common.h"
@@ -47,5 +47,5 @@ void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	uart_p->CR1 |= BIT(3);
 	uart_p->CR1 |= BIT(2);
 
-	spin(84000000);
+	spin(8000000);
 }

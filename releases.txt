@@ -1,5 +1,8 @@
 Releases:
 
+
+[2025-05-16] T15: Split off hw includes from usage functions of rcc
+
 [2025-05-15] T13: Split off hw includes from usage functions of gpio
 [2025-05-15] T12: *.o files are now in `obj/` and bin files are in `bin/`
 [2025-05-15] T9: Split off hw includes from usage functions of uart

@@ -7,7 +7,6 @@ TODO:
 10. Add architecture specific compilation
 11. Add uart regs macros
 14. Setup define macros for gpio registers
-15. Split off hw includes from usage functions of rcc
 16. Split off clocking setup out of main.c
 16. Split off clocking setup out of main.c
 17. Setup define macros for rcc registers
@@ -16,6 +15,7 @@ TODO:
 20. Setup github action to HIL testing
 21. Setup GTest for testing
 22. Setup github action for unit testing
+23. Setup RCC clocking abstraction
 
 DONE:
 1. Update Makefile to support `include/` and `lib/` directories
@@ -26,3 +26,4 @@ DONE:
 9. Split off hw includes from usage functions of uart
 12. Makefile should put obj files into obj/ and bin files into bin/
 13. Split off hw includes from usage functions of gpio
+15. Split off hw includes from usage functions of rcc
