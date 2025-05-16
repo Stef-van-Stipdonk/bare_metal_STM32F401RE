@@ -1,8 +1,7 @@
 IN PROGRESS:
-8. Setup define macros for uart registers
+6. Setup interrupts
 
 TODO:
-6. Setup interrupts
 7. Setup timers
 10. Add architecture specific compilation
 14. Setup define macros for gpio registers
