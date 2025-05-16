@@ -1,6 +1,7 @@
 Releases:
 
 
+[2025-05-16] T11: Add uart regs macros
 [2025-05-16] T15: Split off hw includes from usage functions of rcc
 
 [2025-05-15] T13: Split off hw includes from usage functions of gpio
