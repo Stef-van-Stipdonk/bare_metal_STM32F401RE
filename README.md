@@ -9,4 +9,5 @@ As in no libraries; just me, assembly, C files, some datasheets and probably a c
  - UART
  - Clock initialization
  - I2C
+ - NVIC
  - SPI interface for enc28j60 (in progress)
