@@ -6,8 +6,6 @@ TODO:
 7. Setup timers
 10. Add architecture specific compilation
 14. Setup define macros for gpio registers
-16. Split off clocking setup out of main.c
-16. Split off clocking setup out of main.c
 17. Setup define macros for rcc registers
 18. Setup define macros for nvic registers
 19. Setup github action to trigger home lab build
@@ -27,3 +25,4 @@ DONE:
 13. Split off hw includes from usage functions of gpio
 15. Split off hw includes from usage functions of rcc
 11. Add uart regs macros
+16. Split off clocking setup out of main.c
