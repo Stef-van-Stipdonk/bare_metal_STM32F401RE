@@ -108,6 +108,13 @@ struct nvic_t {
 	volatile uint32_t IPR57; // Interrupt priority register 57
 	volatile uint32_t IPR58; // Interrupt priority register 58
 	volatile uint32_t IPR59; // Interrupt priority register 59
+
+
+	// PM0214 - P220
+	// SCB Registers
+	// Reserved
+	
+	// NVIC_STIR
 };
 
 #define NVIC ((struct nvic_t *)0xE000E100);
