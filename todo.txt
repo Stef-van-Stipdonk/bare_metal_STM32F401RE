@@ -1,8 +1,7 @@
 IN PROGRESS:
-8. Setup define macros for uart registers
+6. Setup interrupts
 
 TODO:
-6. Setup interrupts
 7. Setup timers
 10. Add architecture specific compilation
 14. Setup define macros for gpio registers
@@ -13,6 +12,7 @@ TODO:
 21. Setup GTest for testing
 22. Setup github action for unit testing
 23. Setup RCC clocking abstraction
+24. Cleanup the Makefile, it currently leaves behind useless artifacts (tmp.map)
 
 DONE:
 1. Update Makefile to support `include/` and `lib/` directories

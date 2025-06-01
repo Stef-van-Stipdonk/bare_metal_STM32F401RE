@@ -1,4 +1,5 @@
 #include "rcc.h"
+#include "systick.h"
 #include "uart.h"
 #include "flash.h"
 #include <stdint.h>
@@ -7,10 +8,16 @@ int main(void) {
 	rcc_init();
 	uart_init(UART2, 115200);
 	uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
+	systick_init(84000000 / 84000);
 
 	for (;;) {
+		if (s_ticks % 10 == 0) {
+			uart_write_buffer(UART2, "TICK\r\n");
+		}
 	}
 }
+
+extern void _estack(void);
 
 __attribute__((naked, noreturn)) void _reset(void) {
     extern long _sbss, _ebss, _sdata, _edata, _sidata;
@@ -23,8 +30,6 @@ __attribute__((naked, noreturn)) void _reset(void) {
     for (;;) (void) 0;  // Infinite loop if main() returns
 }
 
-extern void _estack(void);
-
 __attribute__((section(".vectors"))) void (* const tab[16 + 91])(void) = {
-	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
+	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SysTick_Handler, 0
 };

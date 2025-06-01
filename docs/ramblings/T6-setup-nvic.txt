@@ -1,0 +1,21 @@
+
+# Basic questions?
+- What is an NVIC for?
+Supports 52 different interrupts (not including FPU interrupts).
+23 of these can be software interrupts.
+Each interrupt can have 16 levels of priority (4 bits).
+An interupt can be used to respond to outside "stuff" or events which should cause
+the current running thread to be swapped out.
+
+Alright, so I seems that EXTI, is used to trigger interrupt.
+This trigger is sent to the NVIC which checks if the interrupt is enabled and if its priority level is high
+enough to override current execution.
+Then the NVIC calls the ISR.
+The ISR handles the event and then clears the pending interrupt.
+
+- What is "good" nvic design?
+Create the nvic_regs.h which contains the struct + define macros.
+For defining the interrupts, define the prototypes in some file like vector_table.h with "weak".
+Put a log statement and a "while" trap in these functions.
+This way they can be overwritten.
+Then put defined IRQ's into an interrupt folder in seperate files for each IRQ.
