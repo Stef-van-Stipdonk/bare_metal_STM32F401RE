@@ -1,5 +1,8 @@
 Releases:
 
+[2025-06-01] T6: setup basic nvic stuff
+[2025-06-01] T25: setup unit testing with unity
+
 [2025-05-16] T8: Setup define macros for uart registers
 [2025-05-16] T16: Split off clocking setup out of main.c
 [2025-05-16] T11: Add uart regs macros

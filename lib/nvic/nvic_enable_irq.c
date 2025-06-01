@@ -16,31 +16,31 @@ void nvic_enable_irq(uint32_t IRQ_number) {
 	}
 
 	if (IRQ_number < ISER0_BOUNDARY) {
-		NVIC->ISER0 = (1 << IRQ_number);
+		NVIC->ISER[0] = (1 << IRQ_number);
 	}
 	else if (IRQ_number < ISER1_BOUNDARY) {
-		NVIC->ISER1 = (1 << IRQ_number);
+		NVIC->ISER[1] = (1 << (IRQ_number - ISER0_BOUNDARY));
 	}
 	else if (IRQ_number < ISER2_BOUNDARY) {
-		NVIC->ISER2 = (1 << IRQ_number);
+		NVIC->ISER[2] = (1 << (IRQ_number - ISER1_BOUNDARY));
 	}
 	else if (IRQ_number < ISER3_BOUNDARY) {
-		NVIC->ISER3 = (1 << IRQ_number);
+		NVIC->ISER[3] = (1 << (IRQ_number - ISER2_BOUNDARY));
 	}
 	else if (IRQ_number < ISER4_BOUNDARY) {
-		NVIC->ISER4 = (1 << IRQ_number);
+		NVIC->ISER[4] = (1 << (IRQ_number - ISER3_BOUNDARY));
 	}
 	else if (IRQ_number < ISER5_BOUNDARY) {
-		NVIC->ISER5 = (1 << IRQ_number);
+		NVIC->ISER[5] = (1 << (IRQ_number - ISER4_BOUNDARY));
 	}
 	else if (IRQ_number < ISER6_BOUNDARY) {
-		NVIC->ISER6 = (1 << IRQ_number);
+		NVIC->ISER[6] = (1 << (IRQ_number - ISER5_BOUNDARY));
 	}
 	else if (IRQ_number < ISER7_BOUNDARY) {
 		if (IRQ_number > ISER7_BOUNDARY + 15) { // bits 16 to 31 are reserved
 			return;
 		}
 
-		NVIC->ISER7 = (1 << IRQ_number);
+		NVIC->ISER[7] = (1 << (IRQ_number - ISER6_BOUNDARY));
 	}
 }

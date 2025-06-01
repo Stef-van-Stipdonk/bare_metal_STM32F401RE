@@ -26,3 +26,4 @@ DONE:
 15. Split off hw includes from usage functions of rcc
 11. Add uart regs macros
 16. Split off clocking setup out of main.c
+25. Setup unit testing with unity
