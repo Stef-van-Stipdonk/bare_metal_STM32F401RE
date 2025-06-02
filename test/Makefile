@@ -11,7 +11,7 @@ TESTS = \
 
 TARGETS = $(patsubst ./nvic/test_%.c, build/test_%, $(TESTS))
 
-all: $(TARGETS)
+all: $(TARGETS) test
 
 build/test_%: ./nvic/test_%.c $(SRC) $(UNITY) $(MOCKS)
 	@mkdir -p build
