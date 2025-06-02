@@ -2,18 +2,24 @@ CC = gcc
 CFLAGS = -I./nvic -I../test -I../unity -I../include -I../include/arch/stm32/401RE -Wall -Wextra -std=c99 -DUNDER_UNIT_TEST
 
 SRC = ../lib/nvic/nvic_enable_irq.c ../lib/nvic/nvic_disable_irq.c
-TEST_SRC = ./nvic/test_nvic.c ../unity/unity.c ./nvic/mock_nvic_regs.c
+UNITY = ../unity/unity.c
+MOCKS = ./nvic/mock_nvic_regs.c
 
-TARGET = build/test_nvic
+TESTS = \
+    ./nvic/test_nvic_enable_irq.c \
+    ./nvic/test_nvic_disable_irq.c
 
-all: $(TARGET)
+TARGETS = $(patsubst ./nvic/test_%.c, build/test_%, $(TESTS))
 
-$(TARGET): $(SRC) $(TEST_SRC)
+all: $(TARGETS)
+
+build/test_%: ./nvic/test_%.c $(SRC) $(UNITY) $(MOCKS)
 	@mkdir -p build
-	$(CC) $(CFLAGS) $(SRC) $(TEST_SRC) -o $(TARGET)
+	$(CC) $(CFLAGS) $^ -o $@
 
-test: $(TARGET)
-	./$(TARGET)
+test: $(TARGETS)
+	@for t in $(TARGETS); do echo "Running $$t"; ./$$t; done
 
 clean:
 	rm -rf build *.o
+
