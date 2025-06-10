@@ -3,14 +3,15 @@ CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
             -g3 -Os -ffunction-sections -fdata-sections \
             -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 $(EXTRA_CFLAGS) $(INC_DIRS)
 
-LDFLAGS ?= -Tlink.ld -nostartfiles -nostdlib -lc -lgcc -Wl,--gc-sections -Wl,-Map=$@.map
+LDFLAGS ?= -Tlink.ld -nostartfiles -nostdlib -lc -lgcc -Wl,--gc-sections -Wl,-Map=$(APP_NAME).map
 
 SRC_DIR = lib
 OBJ_DIR = obj
 INC_DIR = include
-BUILD_NAME = tmp
+BUILD_NAME = tmp.bin
 BIN_DIR = bin
-BIN = firmware.bin
+APP_NAME = firmware
+BIN = $(APP_NAME).bin
 
 SRCS = $(shell find $(SRC_DIR) -name '*.c')
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -26,6 +27,7 @@ $(BIN): $(BUILD_NAME)
 	@mkdir -p $(BIN_DIR)
 	arm-none-eabi-objcopy -O binary $< $@
 	mv $@ $(BIN_DIR)
+	mv $(APP_NAME).map $(BIN_DIR)
 	rm $(BUILD_NAME)
 
 $(BUILD_NAME): $(MAIN_OBJ) $(OBJS)
@@ -39,14 +41,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	arm-none-eabi-gcc $(CFLAGS) -c $< -o $@
 
-firmware.elf: $(SOURCES)
-	arm-none-eabi-gcc $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
-
 clean:
-	rm -rf $(OBJ_DIR) $(BUILD_NAME) $(BIN)
+	rm -rf $(OBJ_DIR) $(BIN)
 
-compile_commands.json:
-	make clean
-	bear -- make
-
-.PHONY: all clean firmware.elf
+.PHONY: all clean
