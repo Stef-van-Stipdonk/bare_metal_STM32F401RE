@@ -61,14 +61,13 @@ struct systick_t {
 static inline void systick_init(uint32_t ticks_p) {
 	uint32_t ticks = ticks_p - 1;
 
-	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
-	if (ticks <= 0 && ticks > STK_LOAD_MAX_VALUE) {
+	if (ticks == 0 || ticks > STK_LOAD_MAX_VALUE) {
 		return;
 	}
 
-	SYSTICK->LOAD = ticks - 1;
+	SYSTICK->LOAD = ticks;
 	SYSTICK->VAL = 0;
-	SYSTICK->CTRL = SYSTICK_CTRL_ENABLE | SYSTICK_CTRL_TICKINT;
+	SYSTICK->CTRL = (SYSTICK_CTRL_ENABLE | SYSTICK_CTRL_TICKINT | SYSTICK_CTRL_CLKSOURCE);
 }
 
 static volatile uint32_t s_ticks;

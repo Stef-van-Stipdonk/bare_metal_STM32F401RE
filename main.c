@@ -8,13 +8,15 @@ int main(void) {
 	rcc_init();
 	uart_init(UART2, 115200);
 	uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
-	systick_init(84000000 / 84000);
+	systick_init(1000000);
 
-	for (;;) {
-		if (s_ticks % 10 == 0) {
-			uart_write_buffer(UART2, "TICK\r\n");
-		}
-	}
+    uint32_t last_ticks = s_ticks;
+    for (;;) {
+        if (s_ticks != last_ticks) {
+            uart_write_buffer(UART2, "TICK\r\n");
+            last_ticks = s_ticks;
+        }
+    }
 }
 
 extern void _estack(void);
@@ -31,5 +33,5 @@ __attribute__((naked, noreturn)) void _reset(void) {
 }
 
 __attribute__((section(".vectors"))) void (* const tab[16 + 91])(void) = {
-	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SysTick_Handler, 0
+	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SysTick_Handler
 };
