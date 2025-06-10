@@ -7,3 +7,4 @@ main
 .cache
 .rgignore
 compile_commands.json
+*.pdf
