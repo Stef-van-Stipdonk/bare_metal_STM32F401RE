@@ -1,6 +1,7 @@
 
 #include "rcc.h"
 #include "rcc_regs.h"
+#include "flash.h"
 
 void rcc_init() {
 	RCC->CR |= RCC_CR_HSION; // Enable to HSI
