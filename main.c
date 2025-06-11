@@ -6,16 +6,15 @@
 #include "uart_regs.h"
 #include <stdint.h>
 
-static volatile  char test_v = 'a';
+volatile char test_v;
 
 int main(void) {
 	rcc_init();
 	uart_init(UART2, 115200);
 	uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
 	// systick_init(1000000);
+    test_v = 'a';
 
-    UART2->CR1 |= BIT(5); // Enable interrupts
-    nvic_enable_irq(38);
     char tmp = test_v;
     for (;;) {
         if (tmp != test_v) {
@@ -25,10 +24,6 @@ int main(void) {
     }
 }
 
-// UART interrupt handler
-void uart_handler(void) {
-	test_v = (uint8_t) (UART2->DR & 255);
-}
 
 extern void _estack(void);
 
@@ -44,5 +39,5 @@ __attribute__((naked, noreturn)) void _reset(void) {
 }
 
 __attribute__((section(".vectors"))) void (* const tab[16 + 91])(void) = {
-	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, IRQ_systick_handler, [16 + 38] = uart_handler, 
+	_estack, _reset, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, IRQ_systick_handler, [16 + 38] = IRQ_uart_handler, 
 };

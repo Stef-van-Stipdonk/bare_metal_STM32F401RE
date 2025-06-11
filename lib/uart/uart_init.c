@@ -1,5 +1,6 @@
 #include "uart.h"
 #include "rcc_regs.h"
+#include "nvic.h"
 #include "common_defines.h"
 #include "gpio.h"
 #include "common.h"
@@ -48,4 +49,7 @@ void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	uart_p->CR1 |= BIT(2);
 
 	spin(8000000);
+
+    UART2->CR1 |= BIT(5); // Enable interrupts
+    nvic_enable_irq(38);
 }

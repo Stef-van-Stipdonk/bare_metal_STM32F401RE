@@ -44,4 +44,9 @@ void uart_write_byte(struct uart_t *uart_p, uint8_t byte_p);
 */
 void uart_write_buffer(struct uart_t *uart_p, char *buf_p);
 
+/**
+ * Description: Handle UART interrupt.
+ */
+void IRQ_uart_handler(void);
+
 #endif // UART_H
