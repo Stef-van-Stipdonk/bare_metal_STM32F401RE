@@ -4,6 +4,7 @@
 #include "uart.h"
 #include "flash.h"
 #include "uart_regs.h"
+#include "circular_buffer.h"
 #include <stdint.h>
 
 volatile char test_v;
@@ -14,6 +15,10 @@ int main(void) {
 	uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
 	// systick_init(1000000);
     test_v = 'a';
+
+    CircularBuffer_init(test, 10);
+    test.head = 0;
+    (void)test;
 
     char tmp = test_v;
     for (;;) {
