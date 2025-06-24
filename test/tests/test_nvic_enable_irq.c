@@ -1,4 +1,4 @@
-#include "mock_nvic_regs.h"
+#include "../mocks/mock_nvic_regs.h"
 #include "unity.h"
 #include "nvic.h"
 #include "unity_internals.h"
@@ -89,7 +89,9 @@ void test_irq_enable_ISER_out_of_bounds(void) {
 }
 
 int main(void) {
-    UnityBegin("[ test/nvic/test_nvic_enable_irq.c ] ");
+    char buf[1024];
+    snprintf(buf, sizeof(buf), "[ %s ]", __FILE__);
+    UnityBegin(buf);
 
     RUN_TEST(test_irq_enable_ISER0_bounds);
     RUN_TEST(test_irq_enable_ISER1_bounds);
