@@ -1,9 +1,12 @@
 #include "uart.h"
 #include "uart_regs.h"
+#include "circular_buffer.h"
 #include <stdint.h>
 
 extern char test_v;
 
+extern volatile struct circular_buffer uart_receive_buffer;
+
 void IRQ_uart_handler(void) {
-    test_v = (uint8_t) (UART2->DR & 255);
+    CircularBuffer_Push(&uart_receive_buffer,(uint8_t) (UART2->DR & 255));
 }

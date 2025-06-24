@@ -1,3 +1,4 @@
+#include "circular_buffer.h"
 #include "uart.h"
 #include "rcc_regs.h"
 #include "nvic.h"
@@ -6,6 +7,16 @@
 #include "common.h"
 #include <stdint.h>
 #include <stddef.h>
+
+
+#define UART_CIRCULAR_BUFFER_SIZE 10
+static uint8_t uart_buffer_data[UART_CIRCULAR_BUFFER_SIZE];
+volatile struct circular_buffer uart_receive_buffer = {
+    .buffer = uart_buffer_data,
+    .head = 0,
+    .tail = 0,
+    .max_length = UART_CIRCULAR_BUFFER_SIZE
+};
 
 void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	if (uart_p == NULL)

@@ -7,26 +7,24 @@
 #include "circular_buffer.h"
 #include <stdint.h>
 
-volatile char test_v;
+extern volatile struct circular_buffer uart_receive_buffer;
 
 int main(void) {
 	rcc_init();
 	uart_init(UART2, 115200);
 	uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
-	// systick_init(1000000);
-    test_v = 'a';
 
-    CircularBuffer_init(test, 10);
-    test.head = 0;
-    (void)test;
+    uint16_t tmp = uart_receive_buffer.head; 
 
-    char tmp = test_v;
     for (;;) {
-        if (tmp != test_v) {
-            tmp = test_v;
-            uart_write_byte(UART2, test_v);
+        if (tmp != uart_receive_buffer.head)
+        {
+            uint8_t out;
+            CircularBuffer_Pop(&uart_receive_buffer, &out);
+            uart_write_byte(UART2, out);
+            tmp = uart_receive_buffer.head;
         }
-    }
+        }
 }
 
 

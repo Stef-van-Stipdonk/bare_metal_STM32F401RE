@@ -1,7 +1,7 @@
 #include "circular_buffer.h"
 #include <stdint.h>
 
-uint8_t CircularBuffer_Pop(struct circular_buffer *buffer, uint8_t *data) {
+uint8_t CircularBuffer_Pop(volatile struct circular_buffer *buffer, uint8_t *data) {
     uint16_t next;
 
     if (buffer->head == buffer->tail) {

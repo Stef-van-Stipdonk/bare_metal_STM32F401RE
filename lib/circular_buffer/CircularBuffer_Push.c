@@ -1,6 +1,6 @@
 #include "circular_buffer.h"
 
-uint8_t CircularBuffer_Push(struct circular_buffer *buffer, uint8_t data) {
+uint8_t CircularBuffer_Push(volatile struct circular_buffer *buffer, uint8_t data) {
     uint16_t next;
 
     next = buffer->head + 1;
