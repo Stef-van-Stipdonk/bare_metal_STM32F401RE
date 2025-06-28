@@ -1,8 +1,44 @@
+/**************************
+*   Includes 
+**************************/
+
 #include "../mocks/mock_nvic_regs.h"
 #include "unity.h"
 #include "nvic.h"
 #include <stdint.h>
 #include <string.h>
+
+/**************************
+*   Public Function templates 
+**************************/
+
+void Test_IrqDisableICER0Bounds(void);
+void Test_IrqDisableICER1Bounds(void);
+void Test_IrqDisableICER2Bounds(void);
+void Test_IrqDisableICER3Bounds(void);
+void Test_IrqDisableICER4Bounds(void);
+void Test_IrqDisableICER5Bounds(void);
+void Test_IrqDisableICER6Bounds(void);
+void Test_IrqDisableICER7Bounds(void);
+void Test_IrqDisableICEROutOfBounds(void);
+
+/**************************
+*   Private Function templates 
+**************************/
+
+/**************************
+*   Macros 
+**************************/
+
+/**************************
+*   Type definitions 
+**************************/
+
+
+/**************************
+*   Implementation
+**************************/
+
 
 void setUp(void) {
     memset(&mock_nvic, 0, sizeof(mock_nvic));
@@ -10,7 +46,7 @@ void setUp(void) {
 
 void tearDown(void) {}
 
-void test_irq_disable_ICER0_bounds(void) {
+void Test_IrqDisableICER0Bounds(void) {
     nvic_disable_irq(0);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[0]);
 
@@ -18,7 +54,7 @@ void test_irq_disable_ICER0_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ICER[0]);
 }
 
-void test_irq_disable_ICER1_bounds(void) {
+void Test_IrqDisableICER1Bounds(void) {
     nvic_disable_irq(32);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[1]);
 
@@ -26,7 +62,7 @@ void test_irq_disable_ICER1_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ICER[1]);
 }
 
-void test_irq_disable_ICER2_bounds(void) {
+void Test_IrqDisableICER2Bounds(void) {
     nvic_disable_irq(64);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[2]);
 
@@ -34,7 +70,7 @@ void test_irq_disable_ICER2_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ICER[2]);
 }
 
-void test_irq_disable_ICER3_bounds(void) {
+void Test_IrqDisableICER3Bounds(void) {
     nvic_disable_irq(96);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[3]);
 
@@ -42,7 +78,7 @@ void test_irq_disable_ICER3_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ICER[3]);
 }
 
-void test_irq_disable_ICER4_bounds(void) {
+void Test_IrqDisableICER4Bounds(void) {
     nvic_disable_irq(128);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[4]);
 
@@ -51,7 +87,7 @@ void test_irq_disable_ICER4_bounds(void) {
 }
 
 
-void test_irq_disable_ICER5_bounds(void) {
+void Test_IrqDisableICER5Bounds(void) {
     nvic_disable_irq(160);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[5]);
 
@@ -60,7 +96,7 @@ void test_irq_disable_ICER5_bounds(void) {
 }
 
 
-void test_irq_disable_ICER6_bounds(void) {
+void Test_IrqDisableICER6Bounds(void) {
     nvic_disable_irq(192);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[6]);
 
@@ -69,7 +105,7 @@ void test_irq_disable_ICER6_bounds(void) {
 }
 
 
-void test_irq_disable_ICER7_bounds(void) {
+void Test_IrqDisableICER7Bounds(void) {
     nvic_disable_irq(224);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ICER[7]);
 
@@ -77,7 +113,7 @@ void test_irq_disable_ICER7_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ICER[7]);
 }
 
-void test_irq_disable_ICER_out_of_bounds(void) {
+void Test_IrqDisableICEROutOfBounds(void) {
     nvic_enable_irq(256);
     nvic_enable_irq(501);
     nvic_enable_irq(300);
@@ -92,15 +128,15 @@ int main(void) {
     snprintf(buf, sizeof(buf), "[ %s ]", __FILE__);
     UnityBegin(buf);
 
-    RUN_TEST(test_irq_disable_ICER0_bounds);
-    RUN_TEST(test_irq_disable_ICER1_bounds);
-    RUN_TEST(test_irq_disable_ICER2_bounds);
-    RUN_TEST(test_irq_disable_ICER3_bounds);
-    RUN_TEST(test_irq_disable_ICER4_bounds);
-    RUN_TEST(test_irq_disable_ICER5_bounds);
-    RUN_TEST(test_irq_disable_ICER6_bounds);
-    RUN_TEST(test_irq_disable_ICER7_bounds);
-    RUN_TEST(test_irq_disable_ICER_out_of_bounds);
+    RUN_TEST(Test_IrqDisableICER0Bounds);
+    RUN_TEST(Test_IrqDisableICER1Bounds);
+    RUN_TEST(Test_IrqDisableICER2Bounds);
+    RUN_TEST(Test_IrqDisableICER3Bounds);
+    RUN_TEST(Test_IrqDisableICER4Bounds);
+    RUN_TEST(Test_IrqDisableICER5Bounds);
+    RUN_TEST(Test_IrqDisableICER6Bounds);
+    RUN_TEST(Test_IrqDisableICER7Bounds);
+    RUN_TEST(Test_IrqDisableICEROutOfBounds);
 
     return UnityEnd();
 }
