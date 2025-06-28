@@ -13,7 +13,8 @@ TESTS = \
     ./tests/test_nvic_enable_irq.c \
     ./tests/test_nvic_disable_irq.c \
 	./tests/test_circular_buffer_init.c \
-	./tests/test_circular_buffer_push.c
+	./tests/test_circular_buffer_push.c \
+	./tests/test_circular_buffer_pop.c
 
 TARGETS = $(patsubst ./tests/test_%.c, build/test_%, $(TESTS))
 

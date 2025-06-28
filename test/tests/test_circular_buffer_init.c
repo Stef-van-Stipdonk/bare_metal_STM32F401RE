@@ -1,15 +1,42 @@
+/**************************
+*   Includes 
+**************************/
+
 #include "circular_buffer.h"
 #include "unity.h"
 #include "unity_internals.h"
 #include <stdint.h>
 #include <string.h>
 
+/**************************
+*   Public Function templates 
+**************************/
+
+void Test_InitCircularBufferLocal(void);
+
+/**************************
+*   Private Function templates 
+**************************/
+
+/**************************
+*   Macros 
+**************************/
+
+/**************************
+*   Type definitions 
+**************************/
+
+
+/**************************
+*   Implementation
+**************************/
+
 void setUp(void) {
 }
 
 void tearDown(void) {}
 
-void test_init_circular_buffer_local(void) {
+void Test_InitCircularBufferLocal(void) {
     uint16_t buf_size = 10;
 
     CircularBuffer_init(test_buffer, buf_size);
@@ -24,7 +51,7 @@ int main(void) {
     snprintf(buf, sizeof(buf), "[ %s ]", __FILE__);
     UnityBegin(buf);
 
-    RUN_TEST(test_init_circular_buffer_local);
+    RUN_TEST(Test_InitCircularBufferLocal);
 
     return UnityEnd();
 }

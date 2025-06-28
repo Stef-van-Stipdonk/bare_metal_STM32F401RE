@@ -7,7 +7,7 @@ struct circular_buffer {
     uint8_t *buffer;
     uint16_t head;
     uint16_t tail;
-    uint16_t max_length;
+    const uint16_t max_length;
 };
 
 #define CircularBuffer_init(x, size)        \
