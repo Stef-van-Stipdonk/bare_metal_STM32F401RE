@@ -1,6 +1,7 @@
 #include "uart.h"
 #include "common_defines.h"
 #include <stddef.h>
+#include "uart_regs.h"
 
 void uart_write_buffer(struct uart_t *uart_p, char *buf_p) {
 	if (uart_p == NULL)

@@ -8,6 +8,6 @@ extern volatile uint32_t s_ticks;
 
 void systick_init(uint32_t ticks_p);
 
-void systick_handler(void);
+void IRQ_systick_handler(void);
 
 #endif // SYSTICK_H

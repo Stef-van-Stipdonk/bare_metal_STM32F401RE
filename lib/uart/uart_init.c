@@ -1,17 +1,30 @@
+#include "circular_buffer.h"
 #include "uart.h"
 #include "rcc_regs.h"
+#include "nvic.h"
 #include "common_defines.h"
 #include "gpio.h"
 #include "common.h"
+#include "uart_regs.h"
 #include <stdint.h>
 #include <stddef.h>
 
-void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
+
+#define UART_CIRCULAR_BUFFER_SIZE 10
+static uint8_t uart_buffer_data[UART_CIRCULAR_BUFFER_SIZE];
+volatile struct circular_buffer uart_receive_buffer = {
+    .buffer = uart_buffer_data,
+    .head = 0,
+    .tail = 0,
+    .max_length = UART_CIRCULAR_BUFFER_SIZE
+};
+
+uint8_t uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	if (uart_p == NULL)
-		return; // TODO: Add error here
+		return 1; // TODO: Add error here
 
 	if (UART1 != uart_p && UART2 != uart_p)
-		return; // TODO: Add error here
+		return 1; // TODO: Add error here
 
 	RCC->AHB1ENR |= BIT(0);
 	__asm volatile ("dsb");
@@ -48,4 +61,9 @@ void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	uart_p->CR1 |= BIT(2);
 
 	spin(8000000);
+
+    UART2->CR1 |= BIT(5); // Enable interrupts
+    nvic_enable_irq(38);
+
+    return 0;
 }

@@ -2,7 +2,8 @@
 #define UART_H 1
 
 #include <stdint.h>
-#include "uart_regs.h"
+
+struct uart_t;
 
 /**
 * Description: intializes uart
@@ -10,8 +11,7 @@
 * - uart_p[in/out] address of the uart peripheral to be initialized
 * - baud_p[in] the desired baudrate of the uart perhiperal
 */
-void uart_init(struct uart_t *uart_p, uint32_t baud_p);
-
+uint8_t uart_init(struct uart_t *uart_p, uint32_t baud_p);
 
 /**
 * Description: Check if data can be read from uart
@@ -43,5 +43,10 @@ void uart_write_byte(struct uart_t *uart_p, uint8_t byte_p);
 * - buf_p[in] buffer to write
 */
 void uart_write_buffer(struct uart_t *uart_p, char *buf_p);
+
+/**
+ * Description: Handle UART interrupt.
+ */
+void IRQ_uart_handler(void);
 
 #endif // UART_H

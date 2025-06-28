@@ -1,9 +1,44 @@
-#include "mock_nvic_regs.h"
+/**************************
+*   Includes 
+**************************/
+
+#include "../mocks/mock_nvic_regs.h"
 #include "unity.h"
 #include "nvic.h"
 #include "unity_internals.h"
 #include <stdint.h>
 #include <string.h>
+
+/**************************
+*   Public Function templates 
+**************************/
+
+void Test_IrqEnableISER0Bounds(void);
+void Test_IrqEnableISER1Bounds(void);
+void Test_IrqEnableISER2Bounds(void);
+void Test_IrqEnableISER3Bounds(void);
+void Test_IrqEnableISER4Bounds(void);
+void Test_IrqEnableISER5Bounds(void);
+void Test_IrqEnableISER6Bounds(void);
+void Test_IrqEnableISER7Bounds(void);
+void Test_IrqEnableISEROutOfBounds(void);
+
+/**************************
+*   Private Function templates 
+**************************/
+
+/**************************
+*   Macros 
+**************************/
+
+/**************************
+*   Type definitions 
+**************************/
+
+
+/**************************
+*   Implementation
+**************************/
 
 void setUp(void) {
     memset(&mock_nvic, 0, sizeof(mock_nvic));
@@ -11,7 +46,7 @@ void setUp(void) {
 
 void tearDown(void) {}
 
-void test_irq_enable_ISER0_bounds(void) {
+void Test_IrqEnableISER0Bounds(void) {
     nvic_enable_irq(0);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[0]);
 
@@ -19,7 +54,7 @@ void test_irq_enable_ISER0_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ISER[0]);
 }
 
-void test_irq_enable_ISER1_bounds(void) {
+void Test_IrqEnableISER1Bounds(void) {
     nvic_enable_irq(32);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[1]);
 
@@ -27,7 +62,7 @@ void test_irq_enable_ISER1_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ISER[1]);
 }
 
-void test_irq_enable_ISER2_bounds(void) {
+void Test_IrqEnableISER2Bounds(void) {
     nvic_enable_irq(64);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[2]);
 
@@ -35,7 +70,7 @@ void test_irq_enable_ISER2_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ISER[2]);
 }
 
-void test_irq_enable_ISER3_bounds(void) {
+void Test_IrqEnableISER3Bounds(void) {
     nvic_enable_irq(96);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[3]);
 
@@ -43,7 +78,7 @@ void test_irq_enable_ISER3_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ISER[3]);
 }
 
-void test_irq_enable_ISER4_bounds(void) {
+void Test_IrqEnableISER4Bounds(void) {
     nvic_enable_irq(128);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[4]);
 
@@ -52,7 +87,7 @@ void test_irq_enable_ISER4_bounds(void) {
 }
 
 
-void test_irq_enable_ISER5_bounds(void) {
+void Test_IrqEnableISER5Bounds(void) {
     nvic_enable_irq(160);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[5]);
 
@@ -61,7 +96,7 @@ void test_irq_enable_ISER5_bounds(void) {
 }
 
 
-void test_irq_enable_ISER6_bounds(void) {
+void Test_IrqEnableISER6Bounds(void) {
     nvic_enable_irq(192);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[6]);
 
@@ -70,7 +105,7 @@ void test_irq_enable_ISER6_bounds(void) {
 }
 
 
-void test_irq_enable_ISER7_bounds(void) {
+void Test_IrqEnableISER7Bounds(void) {
     nvic_enable_irq(224);
     TEST_ASSERT_EQUAL_HEX32(1 << 0, mock_nvic.ISER[7]);
 
@@ -78,7 +113,7 @@ void test_irq_enable_ISER7_bounds(void) {
     TEST_ASSERT_EQUAL_HEX32(1 << 31, mock_nvic.ISER[7]);
 }
 
-void test_irq_enable_ISER_out_of_bounds(void) {
+void Test_IrqEnableISEROutOfBounds(void) {
     nvic_enable_irq(256);
     nvic_enable_irq(501);
     nvic_enable_irq(300);
@@ -89,17 +124,19 @@ void test_irq_enable_ISER_out_of_bounds(void) {
 }
 
 int main(void) {
-    UnityBegin("[ test/nvic/test_nvic_enable_irq.c ] ");
+    char buf[1024];
+    snprintf(buf, sizeof(buf), "[ %s ]", __FILE__);
+    UnityBegin(buf);
 
-    RUN_TEST(test_irq_enable_ISER0_bounds);
-    RUN_TEST(test_irq_enable_ISER1_bounds);
-    RUN_TEST(test_irq_enable_ISER2_bounds);
-    RUN_TEST(test_irq_enable_ISER3_bounds);
-    RUN_TEST(test_irq_enable_ISER4_bounds);
-    RUN_TEST(test_irq_enable_ISER5_bounds);
-    RUN_TEST(test_irq_enable_ISER6_bounds);
-    RUN_TEST(test_irq_enable_ISER7_bounds);
-    RUN_TEST(test_irq_enable_ISER_out_of_bounds);
+    RUN_TEST(Test_IrqEnableISER0Bounds);
+    RUN_TEST(Test_IrqEnableISER1Bounds);
+    RUN_TEST(Test_IrqEnableISER2Bounds);
+    RUN_TEST(Test_IrqEnableISER3Bounds);
+    RUN_TEST(Test_IrqEnableISER4Bounds);
+    RUN_TEST(Test_IrqEnableISER5Bounds);
+    RUN_TEST(Test_IrqEnableISER6Bounds);
+    RUN_TEST(Test_IrqEnableISER7Bounds);
+    RUN_TEST(Test_IrqEnableISEROutOfBounds);
 
     return UNITY_END();
 }
