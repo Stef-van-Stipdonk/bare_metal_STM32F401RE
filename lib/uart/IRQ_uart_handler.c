@@ -2,8 +2,7 @@
 #include "uart_regs.h"
 #include "circular_buffer.h"
 #include <stdint.h>
-
-extern char test_v;
+#include "uart_regs.h"
 
 extern volatile struct circular_buffer uart_receive_buffer;
 

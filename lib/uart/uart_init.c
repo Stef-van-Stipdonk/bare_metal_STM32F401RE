@@ -5,6 +5,7 @@
 #include "common_defines.h"
 #include "gpio.h"
 #include "common.h"
+#include "uart_regs.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -18,12 +19,12 @@ volatile struct circular_buffer uart_receive_buffer = {
     .max_length = UART_CIRCULAR_BUFFER_SIZE
 };
 
-void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
+uint8_t uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	if (uart_p == NULL)
-		return; // TODO: Add error here
+		return 1; // TODO: Add error here
 
 	if (UART1 != uart_p && UART2 != uart_p)
-		return; // TODO: Add error here
+		return 1; // TODO: Add error here
 
 	RCC->AHB1ENR |= BIT(0);
 	__asm volatile ("dsb");
@@ -63,4 +64,6 @@ void uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 
     UART2->CR1 |= BIT(5); // Enable interrupts
     nvic_enable_irq(38);
+
+    return 0;
 }
