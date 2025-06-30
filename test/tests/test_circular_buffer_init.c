@@ -45,14 +45,3 @@ void Test_InitCircularBufferLocal(void) {
     TEST_ASSERT_EQUAL_INT(0, test_buffer.tail);
     TEST_ASSERT_EQUAL_INT(buf_size, test_buffer.max_length);
 }
-
-int main(void) {
-    char buf[1024];
-    snprintf(buf, sizeof(buf), "[ %s ]", __FILE__);
-    UnityBegin(buf);
-
-    RUN_TEST(Test_InitCircularBufferLocal);
-
-    return UnityEnd();
-}
-

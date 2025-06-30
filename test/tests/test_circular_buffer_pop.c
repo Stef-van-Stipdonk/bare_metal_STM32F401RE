@@ -270,21 +270,3 @@ void Test_CirculateEntireBuffer(void) {
     CircularBuffer_Push(&buffer, 10);
     TEST_ASSERT_EQUAL_INT(1, buffer.head);
 }
-
-int main(void) {
-    char buf[1024];
-    snprintf(buf, sizeof(buf), "[ %s ]", __FILE__);
-    UnityBegin(buf);
-
-    RUN_TEST(Test_PassNullBufferToCircularBufferPop);
-    RUN_TEST(Test_PassNullDataToCircularBufferPop);
-    RUN_TEST(Test_PassNullRetDataToCircularBufferPop);
-    RUN_TEST(Test_PopOnEmptyCircularBufferPop);
-    RUN_TEST(Test_PopAndCheckSingleElementOnCircularBuffer);
-    RUN_TEST(Test_PopAndCheckSingleThenPopOnEmtpyBufferElementOnCircularBuffer);
-    RUN_TEST(Test_PopFullCircularBuffer);
-    RUN_TEST(Test_CirculateEntireBuffer);
-
-    return UnityEnd();
-}
-

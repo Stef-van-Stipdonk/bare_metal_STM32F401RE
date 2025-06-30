@@ -117,17 +117,3 @@ void Test_FillUpBufferOfFive(void) {
     TEST_ASSERT_EQUAL_CHAR('C', test_buffer.buffer[2]);
     TEST_ASSERT_EQUAL_CHAR('D', test_buffer.buffer[3]);
 }
-
-int main(void) {
-    char buf[1024];
-    snprintf(buf, sizeof(buf), "[ %s ]", __FILE__);
-    UnityBegin(buf);
-
-    RUN_TEST(Test_PassNullToCircularBufferPush);
-    RUN_TEST(Test_PassNullDataToCircularBufferPush);
-    RUN_TEST(Test_AddOneToCircularBufferOfSizeTen);
-    RUN_TEST(Test_AddFiveToCircularBufferOfSizeTen);
-    RUN_TEST(Test_FillUpBufferOfFive);
-
-    return UnityEnd();
-}
