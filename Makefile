@@ -5,7 +5,7 @@ CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
 
 LDFLAGS ?= -Tlink.ld -nostartfiles -nostdlib -lc -lgcc -Wl,--gc-sections -Wl,-Map=$(APP_NAME).map
 
-SRC_DIR = lib
+SRC_DIR = src 
 OBJ_DIR = obj
 INC_DIR = include
 BUILD_NAME = tmp.bin
