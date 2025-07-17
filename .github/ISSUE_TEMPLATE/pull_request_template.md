@@ -1,10 +1,11 @@
 # <Title>
-
-# Description
 <Description of PR here>
 
 # Checklist
-- [ ] I've covered git diff with tests
-- [ ] I've named all functions as Module_FunctionName(...);
+- [ ] All added function prototypes have docs.
+- [ ] All updated functions have their docs updated.
+- [ ] I've covered git diff with tests.
+- [ ] All new and exisiting tests passed.
+- [ ] I've used the file template for header files.
+- [ ] I've used the file template for implementation files.
 - [ ] All text in this PR template which is wrapped in both `<` and `>` have been replaced.
-... Add more checks as I need them.
