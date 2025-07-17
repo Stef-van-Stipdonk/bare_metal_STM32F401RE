@@ -2,6 +2,8 @@
 #include "rcc.h"
 #include "systick.h"
 #include "uart.h"
+#include "spi.h"
+#include "spi_regs.h"
 #include "flash.h"
 #include "uart_regs.h"
 #include "circular_buffer.h"
@@ -22,6 +24,8 @@ int main(void) {
             uint8_t out;
             CircularBuffer_Pop(&uart_receive_buffer, &out);
             uart_write_byte(UART2, out);
+            Spi_WriteByte(SPI1, out);
+
             tmp = uart_receive_buffer.head;
         }
         }
