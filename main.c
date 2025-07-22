@@ -13,8 +13,12 @@ extern volatile struct circular_buffer uart_receive_buffer;
 
 int main(void) {
 	rcc_init();
+
 	uart_init(UART2, 115200);
-	uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
+    uart_write_buffer(UART2, "[INFO] UART initialized\r\n");
+
+//    Spi_Init(SPI1);
+    uart_write_buffer(UART2, "[INFO] SPI initialized\r\n");
 
     uint16_t tmp = uart_receive_buffer.head; 
 
@@ -24,7 +28,7 @@ int main(void) {
             uint8_t out;
             CircularBuffer_Pop(&uart_receive_buffer, &out);
             uart_write_byte(UART2, out);
-            Spi_WriteByte(SPI1, out);
+ //           Spi_WriteByte(SPI1, out);
 
             tmp = uart_receive_buffer.head;
         }

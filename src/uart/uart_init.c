@@ -26,13 +26,12 @@ uint8_t uart_init(struct uart_t *uart_p, uint32_t baud_p) {
 	if (UART1 != uart_p && UART2 != uart_p)
 		return 1; // TODO: Add error here
 
-	RCC->AHB1ENR |= BIT(0);
-	__asm volatile ("dsb");
+    RCC->AHB1ENR |= BIT(0);
+    __asm volatile ("dsb");
 
 	uint8_t af = 7;
 	uint16_t rx = 0;
 	uint16_t tx = 0;
-	
 
 	if (uart_p == UART1) {
 		RCC->APB2ENR |= BIT(4);
